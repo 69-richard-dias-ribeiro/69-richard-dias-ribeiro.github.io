@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSPM</title>
+</head>
+<style>
+    input:hover,button:hover {
+        cursor: pointer;
+    }
+
+    input.larger {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+<script>
+
+    var current_language = "pt-BR";
+
+    function updateCurrentLanguageLabel() {
+        document.getElementById('current_language').innerHTML = current_language;
+        if (current_language == 'pt-BR') {
+            document.getElementById('flag').src = "https://cdn.countryflags.com/thumbs/brazil/flag-400.png";
+        } else {
+            document.getElementById('flag').src = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png";
+        }
+    };
+
+    function switchLanguage() {
+        if (current_language == 'pt-BR') {
+            current_language = 'en-US';
+            updateLanguage();
+        } else {
+            current_language = 'pt-BR';
+            updateLanguage();
+        }
+    }
+
+    function updateLanguage() {
+        if (current_language == 'pt-BR') {
+            document.getElementById('neck').innerHTML = "Pescoço";
+            document.getElementById('arms').innerHTML = "Braços";
+            document.getElementById('waist').innerHTML = "Cintura";
+            document.getElementById('around_the_world').innerHTML = "Volta ao mundo";
+            document.getElementById('ankles').innerHTML = "Tornozelos";
+        } else {
+            document.getElementById('neck').innerHTML = "Neck";
+            document.getElementById('arms').innerHTML = "Arms";
+            document.getElementById('waist').innerHTML = "Waist";
+            document.getElementById('around_the_world').innerHTML = "Around the world";
+            document.getElementById('ankles').innerHTML = "Ankles";
+        }
+    }
+
+    function checkIfAllAreChecked() {
+        var checkboxes = document.getElementsByClassName("larger");
+        var checked_counter = 0;
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked == 1) {
+                checked_counter++;
+            }
+        }
+
+        if (checked_counter >= 8) {
+            document.body.style.backgroundColor = "lightgreen";
+        } else {
+            document.body.style.backgroundColor = "white";
+        }
+    }
+
+</script>
+
+<body onload="updateLanguage();updateCurrentLanguageLabel();">
+    <h2>Dynamic streching progress manager</h2>
+    <span id="neck">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
+        name="pescoço" id="pescoco" /><br />
+    <span id="arms">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
+        name="braços" id="bracos" /><br />
+    <span id="waist">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
+        name="cintura" id="cintura_id" /><br />
+    <span id="around_the_world">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger"
+        type="checkbox" name="volta_ao_mundo" id="volta_ao_mundo_id" /><br />
+    <span id="ankles">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
+        name="tornozelo" id="tornozelo_id" /><br />
+
+
+    <hr />
+
+
+    Leg swings:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="leg_swings"
+        id="leg_swings_id" /><br />
+    Toe touch:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="toe_touch"
+        id="toe_touch_id" /><br />
+    Groiner:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="groiner"
+        id="groiner_id" /><br />
+    <br />
+    <button type="button" onclick="switchLanguage();updateCurrentLanguageLabel();">Switch language ( pt-BR / en-US
+        )</button><br />
+    <span style="font-weight: bolder;">Currently selected:</span>&nbsp;
+    <span id="current_language"></span>&nbsp;<img id="flag"
+        src="https://cdn.countryflags.com/thumbs/brazil/flag-400.png" width="20px" height="20px"></img>
+</body>
+
+</html>
