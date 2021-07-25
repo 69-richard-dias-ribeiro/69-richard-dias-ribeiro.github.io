@@ -8,7 +8,8 @@
     <title>DSPM</title>
 </head>
 <style>
-    input:hover,button:hover {
+    input:hover,
+    button:hover {
         cursor: pointer;
     }
 
@@ -20,6 +21,43 @@
 <script>
 
     var current_language = "pt-BR";
+    //var checkboxesStateString = "";
+    var checkboxesStateArray = [];
+
+    function saveToLocalStorage() {
+        var checkboxes = document.getElementsByClassName("larger");
+        var checked_counter = 0;
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked == 1) {
+                checkboxesStateArray[i] = "1";
+            } else {
+                checkboxesStateArray[i] = "0";
+            }
+        }
+
+        localStorage.setItem('checkboxesState', checkboxesStateArray.join(';'));
+    }
+
+    function loadToLocalStorage() {
+
+
+
+        if (localStorage.getItem('checkboxesState') !== null) {
+            checkboxesStateArray = localStorage.getItem('checkboxesState').split(';');
+
+            var checkboxes = document.getElementsByClassName("larger");
+            var checked_counter = 0;
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxesStateArray[i] == "1") {
+                    checkboxes[i].checked = true;
+                } else if (checkboxesStateArray[i] == "0") {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
 
     function updateCurrentLanguageLabel() {
         document.getElementById('current_language').innerHTML = current_language;
@@ -75,29 +113,30 @@
 
 </script>
 
-<body onload="updateLanguage();updateCurrentLanguageLabel();">
+<body onload="loadToLocalStorage();updateLanguage();updateCurrentLanguageLabel();">
     <h2>Dynamic streching progress manager</h2>
-    <span id="neck">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
-        name="pescoço" id="pescoco" /><br />
-    <span id="arms">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
-        name="braços" id="bracos" /><br />
-    <span id="waist">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
-        name="cintura" id="cintura_id" /><br />
-    <span id="around_the_world">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger"
-        type="checkbox" name="volta_ao_mundo" id="volta_ao_mundo_id" /><br />
-    <span id="ankles">asd</span>:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox"
-        name="tornozelo" id="tornozelo_id" /><br />
+    <span id="neck">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
+        class="larger" type="checkbox" name="pescoço" id="pescoco" /><br />
+    <span id="arms">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
+        class="larger" type="checkbox" name="braços" id="bracos" /><br />
+    <span id="waist">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
+        class="larger" type="checkbox" name="cintura" id="cintura_id" /><br />
+    <span id="around_the_world">asd</span>:&nbsp;<input onclick="saveToLocalStorage();"
+        onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="volta_ao_mundo"
+        id="volta_ao_mundo_id" /><br />
+    <span id="ankles">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
+        class="larger" type="checkbox" name="tornozelo" id="tornozelo_id" /><br />
 
 
     <hr />
 
 
-    Leg swings:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="leg_swings"
-        id="leg_swings_id" /><br />
-    Toe touch:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="toe_touch"
-        id="toe_touch_id" /><br />
-    Groiner:&nbsp;<input onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="groiner"
-        id="groiner_id" /><br />
+    Leg swings:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();" class="larger"
+        type="checkbox" name="leg_swings" id="leg_swings_id" /><br />
+    Toe touch:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();" class="larger"
+        type="checkbox" name="toe_touch" id="toe_touch_id" /><br />
+    Groiner:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();" class="larger"
+        type="checkbox" name="groiner" id="groiner_id" /><br />
     <br />
     <button type="button" onclick="switchLanguage();updateCurrentLanguageLabel();">Switch language ( pt-BR / en-US
         )</button><br />
