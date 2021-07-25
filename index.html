@@ -20,7 +20,8 @@
 </style>
 <script>
 
-    var current_language = "pt-BR";
+    var current_language = localStorage.getItem('languageItem') === null ? 'pt-BR' :  localStorage.getItem('languageItem');
+    
     //var checkboxesStateString = "";
     var checkboxesStateArray = [];
 
@@ -39,9 +40,15 @@
         localStorage.setItem('checkboxesState', checkboxesStateArray.join(';'));
     }
 
+    function saveLanguage() {
+
+    }
+
+    function loadLanguage() {
+
+    }
+
     function loadToLocalStorage() {
-
-
 
         if (localStorage.getItem('checkboxesState') !== null) {
             checkboxesStateArray = localStorage.getItem('checkboxesState').split(';');
@@ -85,12 +92,16 @@
             document.getElementById('waist').innerHTML = "Cintura";
             document.getElementById('around_the_world').innerHTML = "Volta ao mundo";
             document.getElementById('ankles').innerHTML = "Tornozelos";
+
+            localStorage.setItem('languageItem', 'pt-BR');
         } else {
             document.getElementById('neck').innerHTML = "Neck";
             document.getElementById('arms').innerHTML = "Arms";
             document.getElementById('waist').innerHTML = "Waist";
             document.getElementById('around_the_world').innerHTML = "Around the world";
             document.getElementById('ankles').innerHTML = "Ankles";
+
+            localStorage.setItem('languageItem', 'en-US');
         }
     }
 
@@ -106,6 +117,7 @@
 
         if (checked_counter >= 8) {
             document.body.style.backgroundColor = "lightgreen";
+            alert("👍👍👍");
         } else {
             document.body.style.backgroundColor = "white";
         }
@@ -113,7 +125,7 @@
 
 </script>
 
-<body onload="loadToLocalStorage();updateLanguage();updateCurrentLanguageLabel();">
+<body onload="loadToLocalStorage();updateLanguage();updateCurrentLanguageLabel();checkIfAllAreChecked();">
     <h2>Dynamic streching progress manager</h2>
     <span id="neck">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
         class="larger" type="checkbox" name="pescoço" id="pescoco" /><br />
@@ -129,7 +141,6 @@
 
 
     <hr />
-
 
     Leg swings:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();" class="larger"
         type="checkbox" name="leg_swings" id="leg_swings_id" /><br />
