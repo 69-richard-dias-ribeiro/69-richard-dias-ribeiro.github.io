@@ -116,8 +116,9 @@
         }
 
         if (checked_counter >= 8) {
+            let successMessage = (current_language == 'pt-BR') ? 'Parabéns!' : "Congratulations!";
             document.body.style.backgroundColor = "lightgreen";
-            alert("👍👍👍");
+            alert("👏👏👏👏👏👏👏👏👏👏\n" + successMessage);
         } else {
             document.body.style.backgroundColor = "white";
         }
