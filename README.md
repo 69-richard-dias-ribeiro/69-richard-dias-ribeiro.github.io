@@ -1,5 +1,5 @@
 # Dynamic Streching Progress Manager
-### Example of a To-Do list made with JavaScript, HTML and CSS
+### Example of a simple To-Do list made with JavaScript, HTML and CSS
 
 Static to-do list made with js, html and css hosted with GitHub Pages (https://69-richard-dias-ribeiro.github.io).
 
