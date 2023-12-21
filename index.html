@@ -21,21 +21,13 @@
 <script>
 
     var current_language = localStorage.getItem('languageItem') === null ? 'pt-BR' :  localStorage.getItem('languageItem');
-    
-    //var checkboxesStateString = "";
     var checkboxesStateArray = [];
 
     function saveToLocalStorage() {
         var checkboxes = document.getElementsByClassName("larger");
         var checked_counter = 0;
 
-        for (let i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked == 1) {
-                checkboxesStateArray[i] = "1";
-            } else {
-                checkboxesStateArray[i] = "0";
-            }
-        }
+        for (let i = 0; i < checkboxes.length; i++) checkboxesStateArray[i] = checkboxes[i].checked.toString();
 
         localStorage.setItem('checkboxesState', checkboxesStateArray.join(';'));
     }
@@ -48,53 +40,33 @@
             var checkboxes = document.getElementsByClassName("larger");
             var checked_counter = 0;
 
-            for (let i = 0; i < checkboxes.length; i++) {
-                if (checkboxesStateArray[i] == "1") {
-                    checkboxes[i].checked = true;
-                } else if (checkboxesStateArray[i] == "0") {
-                    checkboxes[i].checked = false;
-                }
-            }
+            for (let i = 0; i < checkboxes.length; i++) checkboxes[i].checked = checkboxesStateArray[i] == "1";
         }
     }
 
     function updateCurrentLanguageLabel() {
         document.getElementById('current_language').innerHTML = current_language;
-        if (current_language == 'pt-BR') {
-            document.getElementById('flag').src = "https://cdn.countryflags.com/thumbs/brazil/flag-400.png";
-        } else {
-            document.getElementById('flag').src = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png";
-        }
+
+        let brazilianFlagURL = "https://cdn.countryflags.com/thumbs/brazil/flag-400.png";
+        let unitedStatesFlagURL = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1280px-Flag_of_the_United_States.svg.png";
+        
+        document.getElementById('flag').src = current_language == 'pt-BR' ? brazilianFlagURL : unitedStatesFlagURL
     };
 
     function switchLanguage() {
-        if (current_language == 'pt-BR') {
-            current_language = 'en-US';
-            updateLanguage();
-        } else {
-            current_language = 'pt-BR';
+            current_language = current_language == 'pt-BR' ? 'en-US' : 'pt-BR';
             updateLanguage();
         }
     }
 
     function updateLanguage() {
-        if (current_language == 'pt-BR') {
-            document.getElementById('neck').innerHTML = "Pescoço";
-            document.getElementById('arms').innerHTML = "Braços";
-            document.getElementById('hips').innerHTML = "Cintura";
-            document.getElementById('around_the_world').innerHTML = "Volta ao mundo";
-            document.getElementById('ankles').innerHTML = "Tornozelos";
+            document.getElementById('neck').innerHTML = current_language == 'pt-BR' ? "Pescoço" : "Neck";
+            document.getElementById('arms').innerHTML = current_language == 'pt-BR' ? "Braços" : "Arms";
+            document.getElementById('hips').innerHTML = current_language == 'pt-BR' ? "Cintura" : "Hips";
+            document.getElementById('around_the_world').innerHTML =  current_language == 'pt-BR' ? "Volta ao mundo" : "Around the world";
+            document.getElementById('ankles').innerHTML = current_language == 'pt-BR' ? "Tornozelos" :  "Ankles";
 
-            localStorage.setItem('languageItem', 'pt-BR');
-        } else {
-            document.getElementById('neck').innerHTML = "Neck";
-            document.getElementById('arms').innerHTML = "Arms";
-            document.getElementById('hips').innerHTML = "Hips";
-            document.getElementById('around_the_world').innerHTML = "Around the world";
-            document.getElementById('ankles').innerHTML = "Ankles";
-
-            localStorage.setItem('languageItem', 'en-US');
-        }
+            localStorage.setItem('languageItem', current_language);
     }
 
     function checkIfAllAreChecked() {
@@ -118,35 +90,84 @@
 
 </script>
 
-<body onload="loadToLocalStorage();updateLanguage();updateCurrentLanguageLabel();checkIfAllAreChecked();">
-    <h2>Dynamic streching progress manager</h2>
-    <span id="neck">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
-        class="larger" type="checkbox" name="pescoço" id="pescoco" /><br />
-    <span id="arms">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
-        class="larger" type="checkbox" name="braços" id="bracos" /><br />
-    <span id="hips">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
-        class="larger" type="checkbox" name="cintura" id="cintura_id" /><br />
-    <span id="around_the_world">asd</span>:&nbsp;<input onclick="saveToLocalStorage();"
-        onchange="checkIfAllAreChecked();" class="larger" type="checkbox" name="volta_ao_mundo"
-        id="volta_ao_mundo_id" /><br />
-    <span id="ankles">asd</span>:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
-        class="larger" type="checkbox" name="tornozelo" id="tornozelo_id" /><br />
-
-
-    <hr />
-
-    Leg swings:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();" class="larger"
-        type="checkbox" name="leg_swings" id="leg_swings_id" /><br />
-    Toe touch:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();" class="larger"
-        type="checkbox" name="toe_touch" id="toe_touch_id" /><br />
-    Groiner:&nbsp;<input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();" class="larger"
-        type="checkbox" name="groiner" id="groiner_id" /><br />
-    <br />
-    <button type="button" onclick="switchLanguage();updateCurrentLanguageLabel();">Switch language ( pt-BR / en-US
-        )</button><br />
-    <span style="font-weight: bolder;">Currently selected:</span>&nbsp;
-    <span id="current_language"></span>&nbsp;<img id="flag"
-        src="https://cdn.countryflags.com/thumbs/brazil/flag-400.png" width="20px" height="20px"></img>
-</body>
+    <body onload="loadToLocalStorage();
+                  updateLanguage();
+                  updateCurrentLanguageLabel();
+                  checkIfAllAreChecked();">
+        
+        <h2>Dynamic streching progress manager</h2>
+        
+        <span id="neck">asd</span>:&nbsp;
+        <input onclick="saveToLocalStorage();"
+               onchange="checkIfAllAreChecked();"
+               class="larger"
+               type="checkbox"
+               name="pescoço"
+               id="pescoco" />
+        <br />
+        <span id="arms">asd</span>:&nbsp;
+        <input onclick="saveToLocalStorage();" 
+               onchange="checkIfAllAreChecked();"
+               class="larger"
+               type="checkbox"
+               name="braços"
+               id="bracos" />
+        <br />
+        <span id="hips">asd</span>:&nbsp;
+        <input onclick="saveToLocalStorage();" onchange="checkIfAllAreChecked();"
+            class="larger" type="checkbox" name="cintura" id="cintura_id" />
+        <br />
+        <span id="around_the_world">asd</span>:&nbsp;
+        <input onclick="saveToLocalStorage();"
+               onchange="checkIfAllAreChecked();"
+               class="larger"
+               type="checkbox"
+               name="volta_ao_mundo"
+               id="volta_ao_mundo_id" />
+        <br />
+        <span id="ankles">asd</span>:&nbsp;
+        <input onclick="saveToLocalStorage();"
+               onchange="checkIfAllAreChecked();"
+               class="larger"
+               type="checkbox"
+               name="tornozelo"
+               id="tornozelo_id" />
+        <br />
+        
+        <hr />
+    
+        Leg swings:&nbsp;
+        <input onclick="saveToLocalStorage();"
+               onchange="checkIfAllAreChecked();"
+               class="larger"
+               type="checkbox"
+               name="leg_swings"
+               id="leg_swings_id" />
+        <br />
+        Toe touch:&nbsp;
+        <input onclick="saveToLocalStorage();"
+               onchange="checkIfAllAreChecked();"
+               class="larger"
+               type="checkbox"
+               name="toe_touch"
+               id="toe_touch_id" />
+        <br />
+        Groiner:&nbsp;
+        <input onclick="saveToLocalStorage();"
+               onchange="checkIfAllAreChecked();"
+               class="larger"
+               type="checkbox"
+               name="groiner"
+               id="groiner_id" />
+        <br />
+        <br />
+        <button type="button" onclick="switchLanguage();updateCurrentLanguageLabel();">Switch language ( pt-BR / en-US)</button>
+        <br />
+        <span style="font-weight: bolder;">Currently selected:</span>&nbsp;
+        <span id="current_language"></span>&nbsp;
+        <img id="flag"
+            src="https://cdn.countryflags.com/thumbs/brazil/flag-400.png" width="20px" height="20px">
+        </img>
+    </body>
 
 </html>
